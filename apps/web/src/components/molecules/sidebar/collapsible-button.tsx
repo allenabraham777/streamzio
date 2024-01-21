@@ -1,8 +1,9 @@
+'use client';
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import { RiExpandRightLine, RiExpandLeftLine } from 'react-icons/ri';
 
-import { Button, cn } from '@streamzio/ui';
+import { Button, cn, Skeleton } from '@streamzio/ui';
 
 import collapsibleState from '@/store/atoms/collapsibleState';
 
@@ -10,7 +11,7 @@ type Props = {
     children: React.ReactNode;
 };
 
-function CollapsibleButton({ children }: Props) {
+const CollapsibleButton = ({ children }: Props) => {
     const [collapsed, setCollapsed] = useRecoilState(collapsibleState);
     return (
         <div className="w-full hidden lg:flex justify-between items-center text-lg font-bold">
@@ -35,6 +36,15 @@ function CollapsibleButton({ children }: Props) {
             </Button>
         </div>
     );
-}
+};
+
+export const CollapsibleButtonSkeleton = () => {
+    return (
+        <div className="w-full hidden lg:flex justify-between items-center text-lg font-bold">
+            <Skeleton className="h-6 w-[100px]" />
+            <Skeleton className="h-6 w-6" />
+        </div>
+    );
+};
 
 export default CollapsibleButton;

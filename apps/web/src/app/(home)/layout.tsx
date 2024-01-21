@@ -1,7 +1,6 @@
-'use client';
-import React from 'react';
+import React, { Suspense } from 'react';
 import Navbar from './_component/navbar/Navbar';
-import Sidebar from './_component/sidebar/Sidebar';
+import Sidebar, { SidebarSkeleton } from './_component/sidebar';
 
 type Props = {
     children: React.ReactNode;
@@ -12,7 +11,9 @@ const HomeLayout = ({ children }: Props) => {
         <div className="flex flex-col h-full">
             <Navbar />
             <section className="flex h-full">
-                <Sidebar />
+                <Suspense fallback={<SidebarSkeleton />}>
+                    <Sidebar />
+                </Suspense>
                 <div className="flex-1">{children}</div>
             </section>
         </div>
