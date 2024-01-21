@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { ClerkProvider } from '@clerk/nextjs';
 import '@streamzio/ui/build/style.css';
 
 import RecoilProvider from '@/components/providers/RecoilProvider';
@@ -21,7 +22,9 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`${inter.className} dark`}>
-                <RecoilProvider>{children}</RecoilProvider>
+                <ClerkProvider>
+                    <RecoilProvider>{children}</RecoilProvider>
+                </ClerkProvider>
             </body>
         </html>
     );

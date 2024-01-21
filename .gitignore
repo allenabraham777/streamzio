@@ -1,6 +1,7 @@
 .next
 build
 .turbo
+.env
 
 # Logs
 logs
