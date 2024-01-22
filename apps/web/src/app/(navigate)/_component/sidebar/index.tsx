@@ -6,12 +6,16 @@ import CollapsibleButton, {
 import RecomendedChannels, { RecomendedChannelsSekeleton } from './recomended-channels';
 import SidebarWrapper from './sidebar-wrapper';
 import { getRecommended } from '@/services/recomended';
+import { getFollowedUsers } from '@/services/follow';
+import FollowingChannels from './followed-channels';
 
 const Sidebar = async () => {
     const channels = await getRecommended();
+    const following = await getFollowedUsers();
     return (
         <SidebarWrapper>
             <CollapsibleButton>For You</CollapsibleButton>
+            <FollowingChannels data={following} />
             <RecomendedChannels data={channels} />
         </SidebarWrapper>
     );

@@ -6,6 +6,7 @@ import '@streamzio/ui/build/style.css';
 import RecoilProvider from '@/components/providers/RecoilProvider';
 
 import './globals.css';
+import ToasterProvider from '@/components/providers/ToasterProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,9 +23,11 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`${inter.className} dark`}>
-                <ClerkProvider>
-                    <RecoilProvider>{children}</RecoilProvider>
-                </ClerkProvider>
+                <ToasterProvider>
+                    <ClerkProvider>
+                        <RecoilProvider>{children}</RecoilProvider>
+                    </ClerkProvider>
+                </ToasterProvider>
             </body>
         </html>
     );

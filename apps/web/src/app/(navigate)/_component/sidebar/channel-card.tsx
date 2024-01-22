@@ -1,11 +1,12 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
+import Link from 'next/link';
 
 import { User } from '@streamzio/db';
 import { Skeleton, cn } from '@streamzio/ui';
 
-import UserAvatar from '@/components/molecules/user-avatar';
-import LiveBadge from '@/components/molecules/live-badge';
+import UserAvatar from '@/components/molecules/users/user-avatar';
+import LiveBadge from '@/components/molecules/users/live-badge';
 import collapsibleStateSelector from '@/store/selectors/collapsibleStateSelector';
 
 type Props = {
@@ -14,8 +15,9 @@ type Props = {
 
 const ChannelCard = ({ channel }: Props) => {
     const collapsed = useRecoilValue(collapsibleStateSelector);
+    const link = `/${channel.username}`;
     return (
-        <div className="flex gap-2">
+        <Link href={link} className="flex gap-2">
             <UserAvatar user={channel} variant="sm" />
             <div
                 className={cn('flex-1 h-full pr-2 hidden lg:block', {
@@ -27,7 +29,7 @@ const ChannelCard = ({ channel }: Props) => {
                     <LiveBadge isSmall />
                 </div>
             </div>
-        </div>
+        </Link>
     );
 };
 

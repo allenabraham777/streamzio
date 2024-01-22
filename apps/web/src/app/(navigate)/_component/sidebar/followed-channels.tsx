@@ -1,19 +1,26 @@
 'use client';
 import React from 'react';
-import { BiVideo } from 'react-icons/bi';
+import { FaRegHeart } from 'react-icons/fa';
 import { useRecoilValue } from 'recoil';
 
 import { User } from '@streamzio/db';
-import { cn, Skeleton } from '@streamzio/ui';
+import {
+    cn,
+    Skeleton,
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger
+} from '@streamzio/ui';
 
 import collapsibleStateSelector from '@/store/selectors/collapsibleStateSelector';
 import ChannelCard, { ChannelCardSkeleton } from './channel-card';
 
 type Props = {
-    data: User[];
+    data: { following: User }[];
 };
 
-const RecomendedChannels = ({ data = [] }: Props) => {
+const FollowingChannels = ({ data }: Props) => {
     const collapsed = useRecoilValue(collapsibleStateSelector);
     if (!data.length) return null;
     return (
@@ -23,26 +30,33 @@ const RecomendedChannels = ({ data = [] }: Props) => {
                     'lg:hidden': collapsed
                 })}
             >
-                Recommended Channels
+                Followed Channels
             </h1>
-            <div
-                className={cn('w-full flex justify-center items-center', {
-                    'lg:flex': collapsed,
-                    'lg:!hidden': !collapsed
-                })}
-            >
-                <BiVideo className="w-7 h-7" />
-            </div>
+            <TooltipProvider>
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <div
+                            className={cn('w-full flex justify-center items-center', {
+                                'lg:flex': collapsed,
+                                'lg:!hidden': !collapsed
+                            })}
+                        >
+                            <FaRegHeart className="w-6 h-6" />
+                        </div>
+                    </TooltipTrigger>
+                    <TooltipContent side="right">Followed Channels</TooltipContent>
+                </Tooltip>
+            </TooltipProvider>
             <div className="flex flex-col gap-2">
                 {data.map((channel) => (
-                    <ChannelCard key={channel.id} channel={channel} />
+                    <ChannelCard key={channel.following.id} channel={channel.following} />
                 ))}
             </div>
         </div>
     );
 };
 
-export const RecomendedChannelsSekeleton = () => {
+export const FollowingChannelsSekeleton = () => {
     return (
         <div className="flex flex-col gap-4">
             <Skeleton className="rounded-md p-3 w-full" />
@@ -55,4 +69,4 @@ export const RecomendedChannelsSekeleton = () => {
     );
 };
 
-export default RecomendedChannels;
+export default FollowingChannels;
