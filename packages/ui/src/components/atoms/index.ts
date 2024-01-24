@@ -4,4 +4,5 @@ export * from './button';
 export * from './input';
 export * from './skeleton';
 export * from './sonner';
+export * from './switch';
 export * from './tooltip';
