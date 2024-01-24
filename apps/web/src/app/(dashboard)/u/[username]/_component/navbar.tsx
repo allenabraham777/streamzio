@@ -1,7 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
 import { UserButton } from '@clerk/nextjs';
-import Search from './search';
 
 const Navbar = () => {
     return (
@@ -9,9 +8,7 @@ const Navbar = () => {
             <span>
                 <Image src="/logo.png" width={40} height={40} alt="Streamzio" />
             </span>
-            <div className="flex-1 flex justify-center items-center">
-                <Search />
-            </div>
+            <div className="flex-1"></div>
             <span className="w-[40px]">
                 <UserButton afterSignOutUrl="/signin" />
             </span>

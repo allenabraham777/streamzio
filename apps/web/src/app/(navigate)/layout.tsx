@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import Navbar from './_component/navbar/Navbar';
+import Navbar from './_component/navbar';
 import Sidebar, { SidebarSkeleton } from './_component/sidebar';
 
 type Props = {
