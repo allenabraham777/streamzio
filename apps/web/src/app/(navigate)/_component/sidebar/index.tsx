@@ -2,7 +2,7 @@ import React from 'react';
 
 import CollapsibleButton, {
     CollapsibleButtonSkeleton
-} from '@/components/molecules/sidebar/collapsible-button';
+} from '@/app/(navigate)/_component/sidebar/collapsible-button';
 import RecomendedChannels, { RecomendedChannelsSekeleton } from './recomended-channels';
 import SidebarWrapper from './sidebar-wrapper';
 import { getRecommended } from '@/services/recomended';

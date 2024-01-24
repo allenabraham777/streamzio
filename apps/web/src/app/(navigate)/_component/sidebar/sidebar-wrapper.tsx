@@ -6,7 +6,7 @@ import { useIsClient } from 'usehooks-ts';
 import { cn } from '@streamzio/ui';
 
 import collapsibleStateSelector from '@/store/selectors/collapsibleStateSelector';
-import { CollapsibleButtonSkeleton } from '@/components/molecules/sidebar/collapsible-button';
+import { CollapsibleButtonSkeleton } from './collapsible-button';
 import { RecomendedChannelsSekeleton } from './recomended-channels';
 
 type Props = {
