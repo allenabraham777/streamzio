@@ -21,16 +21,17 @@ const variants = cva('', {
 export interface Props extends VariantProps<typeof variants> {
     isLive?: boolean;
     user: User;
+    showBadge?: boolean;
 }
 
-const UserAvatar = ({ variant, user, isLive }: Props) => {
+const UserAvatar = ({ variant, user, showBadge, isLive }: Props) => {
     return (
         <div className="relative">
             <Avatar className={cn(variants({ variant }))}>
-                <AvatarImage src={user.imageUrl} />
+                <AvatarImage src={user.imageUrl} className={cn({ grayscale: !isLive })} />
                 <AvatarFallback>{user.username[0].toUpperCase()}</AvatarFallback>
             </Avatar>
-            {isLive && (
+            {showBadge && isLive && (
                 <span className="absolute text-sm px-1 -bottom-3 left-1/2 transform -translate-x-1/2">
                     <LiveBadge />
                 </span>

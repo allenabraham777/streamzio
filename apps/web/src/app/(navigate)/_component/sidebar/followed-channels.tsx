@@ -3,7 +3,6 @@ import React from 'react';
 import { FaRegHeart } from 'react-icons/fa';
 import { useRecoilValue } from 'recoil';
 
-import { User } from '@streamzio/db';
 import {
     cn,
     Skeleton,
@@ -15,9 +14,10 @@ import {
 
 import collapsibleStateSelector from '@/store/selectors/collapsibleStateSelector';
 import ChannelCard, { ChannelCardSkeleton } from './channel-card';
+import { FullUser } from '@/types';
 
 type Props = {
-    data: { following: User }[];
+    data: { following: FullUser }[];
 };
 
 const FollowingChannels = ({ data }: Props) => {

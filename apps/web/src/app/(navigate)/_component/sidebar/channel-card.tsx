@@ -2,15 +2,16 @@ import React from 'react';
 import { useRecoilValue } from 'recoil';
 import Link from 'next/link';
 
-import { User } from '@streamzio/db';
 import { Skeleton, cn } from '@streamzio/ui';
 
 import UserAvatar from '@/components/molecules/users/user-avatar';
 import LiveBadge from '@/components/molecules/users/live-badge';
 import collapsibleStateSelector from '@/store/selectors/collapsibleStateSelector';
+import OfflineBadge from '@/components/molecules/users/offline-badge';
+import { FullUser } from '@/types';
 
 type Props = {
-    channel: User;
+    channel: FullUser;
 };
 
 const ChannelCard = ({ channel }: Props) => {
@@ -18,7 +19,7 @@ const ChannelCard = ({ channel }: Props) => {
     const link = `/${channel.username}`;
     return (
         <Link href={link} className="flex gap-2">
-            <UserAvatar user={channel} variant="sm" />
+            <UserAvatar user={channel} isLive={channel.stream?.isLive} variant="sm" />
             <div
                 className={cn('flex-1 h-full pr-2 hidden lg:block', {
                     'lg:hidden': collapsed
@@ -26,7 +27,7 @@ const ChannelCard = ({ channel }: Props) => {
             >
                 <div className="flex items-center justify-between">
                     <h1 className="p-0 text-base truncate">{channel.username}</h1>
-                    <LiveBadge isSmall />
+                    {channel.stream?.isLive ? <LiveBadge isSmall /> : <OfflineBadge />}
                 </div>
             </div>
         </Link>

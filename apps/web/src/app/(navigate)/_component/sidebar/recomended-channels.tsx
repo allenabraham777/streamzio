@@ -3,7 +3,6 @@ import React from 'react';
 import { BiVideo } from 'react-icons/bi';
 import { useRecoilValue } from 'recoil';
 
-import { User } from '@streamzio/db';
 import {
     cn,
     Skeleton,
@@ -15,9 +14,10 @@ import {
 
 import collapsibleStateSelector from '@/store/selectors/collapsibleStateSelector';
 import ChannelCard, { ChannelCardSkeleton } from './channel-card';
+import { FullUser } from '@/types';
 
 type Props = {
-    data: User[];
+    data: FullUser[];
 };
 
 const RecomendedChannels = ({ data = [] }: Props) => {

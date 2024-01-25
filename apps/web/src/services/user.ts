@@ -12,6 +12,9 @@ export const getUserByUsername = async (username: string) => {
     return await db.user.findFirst({
         where: {
             username
+        },
+        include: {
+            stream: true
         }
     });
 };
