@@ -1,7 +1,7 @@
 'use server';
 import { revalidatePath } from 'next/cache';
 
-import { Stream } from '@streamzio/db';
+import { Stream, User } from '@streamzio/db';
 
 import { db } from '@/lib/db';
 import { getSelf } from '@/services/self';
@@ -42,5 +42,12 @@ export const updateStream = async (values: Partial<Stream>) => {
         return stream;
     } catch {
         throw new Error('Internal Error');
+    }
+};
+
+export const onStreamLoad = (user: User, isDashboard: boolean) => {
+    revalidatePath(`/${user.username}`);
+    if (isDashboard) {
+        revalidatePath(`/u/${user.username}`);
     }
 };

@@ -36,7 +36,7 @@ const VideoPlayer = ({ user, stream }: Props) => {
     useEffect(() => {
         if (flvjs.isSupported() && videoRef.current) {
             const flvPlayer = flvjs.createPlayer({
-                type: 'mp4',
+                type: 'flv',
                 url: `${process.env.NEXT_PUBLIC_VIEW_SERVER}/${stream.streamKey}.flv`
                 // url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4'
             });

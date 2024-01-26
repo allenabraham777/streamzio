@@ -6,7 +6,7 @@ import { IconType } from 'react-icons';
 
 import { cn } from '@streamzio/ui';
 
-import collapsibleStateSelector from '@/store/selectors/collapsibleStateSelector';
+import dashboardCollapsibleStateSelector from '@/store/selectors/dashboardCollapsibleStateSelector';
 
 type Props = {
     icon: IconType;
@@ -16,7 +16,7 @@ type Props = {
 };
 
 const ActionCard = ({ icon: Icon, text, link, isActive }: Props) => {
-    const collapsed = useRecoilValue(collapsibleStateSelector);
+    const collapsed = useRecoilValue(dashboardCollapsibleStateSelector);
     return (
         <Link
             href={link}

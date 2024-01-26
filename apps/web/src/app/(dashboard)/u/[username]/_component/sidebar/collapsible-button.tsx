@@ -12,14 +12,14 @@ import {
     TooltipTrigger
 } from '@streamzio/ui';
 
-import collapsibleState from '@/store/atoms/collapsibleState';
+import dashboardCollapsibleState from '@/store/atoms/dashboardCollapsibleState';
 
 type Props = {
     children: React.ReactNode;
 };
 
 const CollapsibleButton = ({ children }: Props) => {
-    const [collapsed, setCollapsed] = useRecoilState(collapsibleState);
+    const [collapsed, setCollapsed] = useRecoilState(dashboardCollapsibleState);
     return (
         <TooltipProvider>
             <Tooltip>

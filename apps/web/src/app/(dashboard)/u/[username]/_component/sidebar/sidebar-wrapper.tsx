@@ -4,14 +4,14 @@ import { useRecoilValue } from 'recoil';
 
 import { cn } from '@streamzio/ui';
 
-import collapsibleStateSelector from '@/store/selectors/collapsibleStateSelector';
+import dashboardCollapsibleStateSelector from '@/store/selectors/dashboardCollapsibleStateSelector';
 
 type Props = {
     children: React.ReactNode;
 };
 
 const SidebarWrapper = ({ children }: Props) => {
-    const collapsed = useRecoilValue(collapsibleStateSelector);
+    const collapsed = useRecoilValue(dashboardCollapsibleStateSelector);
 
     return (
         <aside
