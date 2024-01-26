@@ -1,4 +1,8 @@
 {
+    "ts-node": {
+        "files": true
+    },
+    "files": ["src/index.ts", "src/socket.d.ts"],
     "compilerOptions": {
         "target": "es2016",
         "module": "commonjs",
@@ -9,6 +13,6 @@
         "strict": true,
         "skipLibCheck": true
     },
-    "include": ["src"],
+    "include": ["src", "./src/socket.d.ts"],
     "exclude": ["build"]
 }
