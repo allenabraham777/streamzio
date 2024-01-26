@@ -4,9 +4,10 @@ import { ClerkProvider } from '@clerk/nextjs';
 import '@streamzio/ui/build/style.css';
 
 import RecoilProvider from '@/components/providers/RecoilProvider';
+import ToasterProvider from '@/components/providers/ToasterProvider';
+import SocketProvider from '@/components/providers/SocketProvider';
 
 import './globals.css';
-import ToasterProvider from '@/components/providers/ToasterProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,7 +26,9 @@ export default function RootLayout({
             <body className={`${inter.className} dark`}>
                 <ToasterProvider>
                     <ClerkProvider>
-                        <RecoilProvider>{children}</RecoilProvider>
+                        <RecoilProvider>
+                            <SocketProvider>{children}</SocketProvider>
+                        </RecoilProvider>
                     </ClerkProvider>
                 </ToasterProvider>
             </body>
