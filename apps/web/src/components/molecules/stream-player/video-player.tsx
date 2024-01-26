@@ -4,7 +4,6 @@ import flvjs from 'flv.js';
 import { useEventListener, useIsClient } from 'usehooks-ts';
 
 import { Stream } from '@streamzio/db';
-import { revalidatePath } from 'next/cache';
 
 import { FullUser } from '@/types';
 
@@ -45,12 +44,6 @@ const VideoPlayer = ({ user, stream }: Props) => {
             flvPlayer.play();
             videoRef.current.onplay = () => {
                 setPlay(true);
-            };
-            videoRef.current.onclose = () => {
-                setTimeout(() => {
-                    revalidatePath(`/u/${user.username}`);
-                    revalidatePath(`/${user.username}`);
-                }, 10000);
             };
             return () => {
                 flvPlayer.destroy();
