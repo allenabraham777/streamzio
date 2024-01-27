@@ -3,18 +3,12 @@ import React from 'react';
 import { BiVideo } from 'react-icons/bi';
 import { useRecoilValue } from 'recoil';
 
-import {
-    cn,
-    Skeleton,
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger
-} from '@streamzio/ui';
+import { cn, Skeleton } from '@streamzio/ui';
 
 import collapsibleStateSelector from '@/store/selectors/collapsibleStateSelector';
 import ChannelCard, { ChannelCardSkeleton } from './channel-card';
 import { FullUser } from '@/types';
+import ToolTip from '@/components/molecules/tooltip';
 
 type Props = {
     data: FullUser[];
@@ -32,21 +26,17 @@ const RecomendedChannels = ({ data = [] }: Props) => {
             >
                 Recommended Channels
             </h1>
-            <TooltipProvider>
-                <Tooltip>
-                    <TooltipTrigger asChild>
-                        <div
-                            className={cn('w-full flex justify-center items-center', {
-                                'lg:flex': collapsed,
-                                'lg:!hidden': !collapsed
-                            })}
-                        >
-                            <BiVideo className="w-7 h-7" />
-                        </div>
-                    </TooltipTrigger>
-                    <TooltipContent side="right">Recommended Channels</TooltipContent>
-                </Tooltip>
-            </TooltipProvider>
+
+            <ToolTip message="Recommended Channels" side="right">
+                <div
+                    className={cn('w-full flex justify-center items-center cursor-pointer', {
+                        'lg:flex': collapsed,
+                        'lg:!hidden': !collapsed
+                    })}
+                >
+                    <BiVideo className="w-7 h-7" />
+                </div>
+            </ToolTip>
 
             <div className="flex flex-col gap-2">
                 {data.map((channel) => (

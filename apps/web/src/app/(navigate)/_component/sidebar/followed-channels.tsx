@@ -3,18 +3,12 @@ import React from 'react';
 import { FaRegHeart } from 'react-icons/fa';
 import { useRecoilValue } from 'recoil';
 
-import {
-    cn,
-    Skeleton,
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger
-} from '@streamzio/ui';
+import { cn, Skeleton } from '@streamzio/ui';
 
 import collapsibleStateSelector from '@/store/selectors/collapsibleStateSelector';
 import ChannelCard, { ChannelCardSkeleton } from './channel-card';
 import { FullUser } from '@/types';
+import ToolTip from '@/components/molecules/tooltip';
 
 type Props = {
     data: { following: FullUser }[];
@@ -32,21 +26,17 @@ const FollowingChannels = ({ data }: Props) => {
             >
                 Followed Channels
             </h1>
-            <TooltipProvider>
-                <Tooltip>
-                    <TooltipTrigger asChild>
-                        <div
-                            className={cn('w-full flex justify-center items-center', {
-                                'lg:flex': collapsed,
-                                'lg:!hidden': !collapsed
-                            })}
-                        >
-                            <FaRegHeart className="w-6 h-6" />
-                        </div>
-                    </TooltipTrigger>
-                    <TooltipContent side="right">Followed Channels</TooltipContent>
-                </Tooltip>
-            </TooltipProvider>
+
+            <ToolTip message="Followed Channels" side="right">
+                <div
+                    className={cn('w-full flex justify-center items-center cursor-pointer', {
+                        'lg:flex': collapsed,
+                        'lg:!hidden': !collapsed
+                    })}
+                >
+                    <FaRegHeart className="w-6 h-6" />
+                </div>
+            </ToolTip>
             <div className="flex flex-col gap-2">
                 {data.map((channel) => (
                     <ChannelCard key={channel.following.id} channel={channel.following} />
