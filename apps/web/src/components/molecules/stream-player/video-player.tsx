@@ -1,6 +1,5 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
-import flvjs from 'flv.js';
 import { useEventListener, useIsClient } from 'usehooks-ts';
 
 import { Stream } from '@streamzio/db';
@@ -33,22 +32,27 @@ const VideoPlayer = ({ user, stream }: Props) => {
     useEventListener('fullscreenchange', handleFullscreenChange, divRef);
 
     useEffect(() => {
-        if (flvjs.isSupported() && videoRef.current) {
-            const flvPlayer = flvjs.createPlayer({
-                type: 'flv',
-                url: `${process.env.NEXT_PUBLIC_VIEW_SERVER}/${stream.streamKey}.flv`
-                // url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4'
-            });
-            flvPlayer.attachMediaElement(videoRef.current);
-            flvPlayer.load();
-            flvPlayer.play();
-            videoRef.current.onplay = () => {
-                setPlay(true);
-            };
-            return () => {
-                flvPlayer.destroy();
-            };
-        }
+        const loadPlayer = async () => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const flvjs: any = await import('flv.js');
+            if (flvjs.isSupported() && videoRef.current) {
+                const flvPlayer = flvjs.createPlayer({
+                    type: 'flv',
+                    url: `${process.env.NEXT_PUBLIC_VIEW_SERVER}/${stream.streamKey}.flv`
+                    // url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4'
+                });
+                flvPlayer.attachMediaElement(videoRef.current);
+                flvPlayer.load();
+                flvPlayer.play();
+                videoRef.current.onplay = () => {
+                    setPlay(true);
+                };
+                return () => {
+                    flvPlayer.destroy();
+                };
+            }
+        };
+        loadPlayer();
     }, [stream, isClient, user.username]);
 
     const playPause = () => {
