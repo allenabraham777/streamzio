@@ -19,8 +19,6 @@ type InfoProps = {
 };
 
 const ChatInfo = ({ isDelayed, isFollowersOnly }: InfoProps) => {
-    console.log({ isDelayed, isFollowersOnly });
-
     const info = useMemo(() => {
         if (isFollowersOnly && !isDelayed) {
             return 'Only followers can chat';
@@ -69,13 +67,7 @@ const ChatInfo = ({ isDelayed, isFollowersOnly }: InfoProps) => {
     );
 };
 
-const ChatForm = ({
-    onSubmit,
-    isFollowing,
-    isChatEnabled,
-    isChatDelayed,
-    isChatFollowersOnly
-}: Props) => {
+const ChatForm = ({ onSubmit, isFollowing, isChatDelayed, isChatFollowersOnly }: Props) => {
     const [value, setValue] = useState('');
     const [isDelayed, setIsDelayed] = useState(false);
     const isFollowerOnlyAndNotFollowing = isChatFollowersOnly && !isFollowing;
@@ -91,9 +83,11 @@ const ChatForm = ({
             setTimeout(() => {
                 setIsDelayed(false);
                 onSubmit(value);
+                setValue('');
             }, 3000);
         } else {
             onSubmit(value);
+            setValue('');
         }
     };
     return (

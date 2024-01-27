@@ -27,16 +27,36 @@ export const socketServer = (io: Server) => {
             console.log(socket.id, 'joined the stream', streamId);
 
             socket.join(streamId);
+            const { username, id: userId } = socket.user!;
+            socket.emit('stream:user:joined', { userId, username, socketId: socket.id });
         });
 
         socket.on('stream:leave', (streamId: string) => {
             console.log(socket.id, 'leaving the stream', streamId);
 
             socket.leave(streamId);
+            const { id } = socket.user!;
+            socket.emit('stream:user:left', id);
         });
 
-        socket.on('stream:chat', (streamId, message) => {
-            io.to(streamId).emit('chatMessage', message);
+        socket.on('stream:user:all', (streamId: string) => {
+            const _clients = io.sockets.adapter.rooms.get(streamId);
+            if (_clients) {
+                const clients = Array.from(_clients).map((client) => {
+                    const userSocket = io.sockets.sockets.get(client);
+                    const { username, id: userId } = userSocket!.user!;
+                    return { username, userId, socketId: client };
+                });
+                socket.emit('stream:user:list', clients);
+            }
+        });
+
+        socket.on('stream:chat:send', (streamId, message) => {
+            io.to(streamId).emit('stream:chat:receive', socket.user?.username, message);
+        });
+
+        socket.on('disconnected', function () {
+            console.log('User left', socket.user?.username);
         });
     });
 };

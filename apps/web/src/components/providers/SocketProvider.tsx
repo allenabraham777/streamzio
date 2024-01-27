@@ -31,9 +31,6 @@ const SocketProvider = ({ children }: Props) => {
             }
         };
         loadData();
-        return () => {
-            socket?.disconnect();
-        };
     }, [session]);
     return <SocketContext.Provider value={{ socket }}>{children}</SocketContext.Provider>;
 };

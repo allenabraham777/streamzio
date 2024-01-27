@@ -1,12 +1,12 @@
 'use client';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { RiExpandLeftLine } from 'react-icons/ri';
 
-import { Stream } from '@streamzio/db';
+import { Stream, User } from '@streamzio/db';
 import { Button, cn } from '@streamzio/ui';
 
-import { FullUser } from '@/types';
+import { ChatMessage, FullUser } from '@/types';
 import socketContext from '@/context/socket-context';
 import { onStreamLoad } from '@/actions/stream';
 import chatCollapsibleState from '@/store/atoms/chatCollapsibleState';
@@ -16,28 +16,43 @@ import ToolTip from '../tooltip';
 
 type Props = {
     user: FullUser;
+    host: User;
     stream: Stream;
     isFollowing: boolean;
     isDashboard?: boolean;
 };
 
-const StreamPlayer = ({ user, stream, isFollowing, isDashboard }: Props) => {
+const StreamPlayer = ({ user, host, stream, isFollowing, isDashboard }: Props) => {
     const { socket } = useContext(socketContext);
     const [collapsedState, setCollapsedState] = useRecoilState(chatCollapsibleState);
+    const [messages, setMessages] = useState<ChatMessage[]>([]);
     const revalidateRoutes = () => {
         onStreamLoad(user, !!isDashboard);
+    };
+    const sendMessage = (message: string) => {
+        if (socket) {
+            socket.emit('stream:chat:send', stream.id, message);
+        }
+    };
+    const receiveMessage = (username: string, message: string) => {
+        setMessages((messages) => [...messages, { username, message }]);
     };
     useEffect(() => {
         if (socket) {
             socket.emit('stream:join', stream.id);
             socket.on('stream:started', revalidateRoutes);
             socket.on('stream:stopped', () => {
-                setTimeout(revalidateRoutes, 5000);
+                setTimeout(() => {
+                    revalidateRoutes();
+                    setMessages([]);
+                }, 5000);
             });
+            socket.on('stream:chat:receive', receiveMessage);
             return () => {
                 socket.emit('stream:leave', stream.id);
                 socket.off('stream:started', revalidateRoutes);
                 socket.off('stream:stopped', revalidateRoutes);
+                socket.off('stream:chat:receive', receiveMessage);
             };
         }
     }, [socket, stream.id]);
@@ -74,10 +89,13 @@ const StreamPlayer = ({ user, stream, isFollowing, isDashboard }: Props) => {
             >
                 <Chat
                     stream={stream}
+                    host={host}
                     isFollowing={isFollowing}
                     isChatDelayed={stream.isChatDelayed}
                     isChatEnabled={stream.isChatEnabled}
                     isChatFollowersOnly={stream.isChatFollowersOnly}
+                    messages={messages}
+                    sendMessage={sendMessage}
                 />
             </div>
         </div>
