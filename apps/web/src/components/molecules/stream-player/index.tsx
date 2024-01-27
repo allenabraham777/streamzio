@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { RiExpandLeftLine } from 'react-icons/ri';
 
-import { Stream, User } from '@streamzio/db';
+import { Stream } from '@streamzio/db';
 import { Button, cn } from '@streamzio/ui';
 
 import { ChatMessage, FullUser } from '@/types';
@@ -16,13 +16,13 @@ import ToolTip from '../tooltip';
 
 type Props = {
     user: FullUser;
-    host: User;
+    isHost: boolean;
     stream: Stream;
     isFollowing: boolean;
     isDashboard?: boolean;
 };
 
-const StreamPlayer = ({ user, host, stream, isFollowing, isDashboard }: Props) => {
+const StreamPlayer = ({ user, isHost, stream, isFollowing, isDashboard }: Props) => {
     const { socket } = useContext(socketContext);
     const [collapsedState, setCollapsedState] = useRecoilState(chatCollapsibleState);
     const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -88,8 +88,9 @@ const StreamPlayer = ({ user, host, stream, isFollowing, isDashboard }: Props) =
                 })}
             >
                 <Chat
+                    user={user}
                     stream={stream}
-                    host={host}
+                    isHost={isHost}
                     isFollowing={isFollowing}
                     isChatDelayed={stream.isChatDelayed}
                     isChatEnabled={stream.isChatEnabled}

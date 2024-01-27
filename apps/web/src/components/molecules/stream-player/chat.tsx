@@ -3,19 +3,20 @@ import React from 'react';
 import { useRecoilValue } from 'recoil';
 
 import { cn } from '@streamzio/ui';
-import { Stream, User } from '@streamzio/db';
+import { Stream } from '@streamzio/db';
 
 import chatVariantStateSelector from '@/store/selectors/chatVariantStateSelector';
 import { ChatVariants } from '@/enums/chatVariants';
-import { ChatMessage } from '@/types';
+import { ChatMessage, FullUser } from '@/types';
 import CollapsibleButton from './collapsible-button';
 import ChatForm from './chat-form';
 import ChatList from './chat-list';
 import Community from './community';
 
 type Props = {
-    host: User;
+    isHost: boolean;
     stream: Stream;
+    user: FullUser;
     isFollowing: boolean;
     isChatEnabled: boolean;
     isChatDelayed: boolean;
@@ -26,12 +27,13 @@ type Props = {
 
 const Chat = ({
     stream,
+    user,
     isChatEnabled,
     isChatDelayed,
     isChatFollowersOnly,
     isFollowing,
     messages,
-    host,
+    isHost,
     sendMessage
 }: Props) => {
     const variant = useRecoilValue(chatVariantStateSelector);
@@ -58,7 +60,7 @@ const Chat = ({
                     hidden: isChat
                 })}
             >
-                <Community stream={stream} />
+                <Community stream={stream} user={user} isHost={isHost} />
             </div>
             <div className={cn('flex-1 flex flex-col', { hidden: !isChat || isHidden })}>
                 <div className="flex-1 overflow-y-auto">

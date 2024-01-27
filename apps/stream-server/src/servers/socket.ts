@@ -28,7 +28,7 @@ export const socketServer = (io: Server) => {
 
             socket.join(streamId);
             const { username, id: userId } = socket.user!;
-            socket.emit('stream:user:joined', { userId, username, socketId: socket.id });
+            io.to(streamId).emit('stream:user:joined', { userId, username, socketId: socket.id });
         });
 
         socket.on('stream:leave', (streamId: string) => {
@@ -36,7 +36,7 @@ export const socketServer = (io: Server) => {
 
             socket.leave(streamId);
             const { id } = socket.user!;
-            socket.emit('stream:user:left', id);
+            io.to(streamId).emit('stream:user:left', id);
         });
 
         socket.on('stream:user:all', (streamId: string) => {
@@ -49,6 +49,12 @@ export const socketServer = (io: Server) => {
                 });
                 socket.emit('stream:user:list', clients);
             }
+        });
+
+        socket.on('stream:user:block', (streamId: string, socketId: string) => {
+            const userSocket = io.sockets.sockets.get(socketId);
+            userSocket!.leave(streamId);
+            io.to(streamId).emit('stream:user:left', userSocket!.user!.id);
         });
 
         socket.on('stream:chat:send', (streamId, message) => {
