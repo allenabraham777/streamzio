@@ -5,6 +5,7 @@ import { Stream } from '@streamzio/db';
 import { FullUser } from '@/types';
 import { LuWifiOff } from 'react-icons/lu';
 import VideoPlayer from './video-player';
+import { Skeleton } from '@streamzio/ui';
 
 type Props = {
     user: FullUser;
@@ -29,6 +30,10 @@ const Video = ({ user, stream, muted }: Props) => {
         component = <VideoPlayer muted={muted} user={user} stream={stream} />;
     }
     return <div className="aspect-video border-b">{component}</div>;
+};
+
+export const VideoSkeleton = () => {
+    return <Skeleton className=" w-full aspect-video border-b" />;
 };
 
 export default Video;

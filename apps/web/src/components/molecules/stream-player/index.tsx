@@ -10,10 +10,10 @@ import { ChatMessage, FullUser } from '@/types';
 import socketContext from '@/context/socket-context';
 import { onStreamLoad } from '@/actions/stream';
 import chatCollapsibleState from '@/store/atoms/chatCollapsibleState';
-import Video from './video';
-import Chat from './chat';
+import Video, { VideoSkeleton } from './video';
+import Chat, { ChatSkeleton } from './chat';
 import ToolTip from '../tooltip';
-import Header from './header';
+import Header, { HeaderSkeleton } from './header';
 
 type Props = {
     user: FullUser;
@@ -101,6 +101,20 @@ const StreamPlayer = ({ user, isHost, stream, isFollowing, isDashboard, muted = 
                     messages={messages}
                     sendMessage={sendMessage}
                 />
+            </div>
+        </div>
+    );
+};
+
+export const StreamPlayerSkeleton = () => {
+    return (
+        <div className="h-full w-full flex flex-col lg:!flex-row relative">
+            <div className="lg:flex-1">
+                <VideoSkeleton />
+                <HeaderSkeleton />
+            </div>
+            <div className="flex-1 lg:flex-none lg:w-[340px] border-l border-l-hover">
+                <ChatSkeleton />
             </div>
         </div>
     );

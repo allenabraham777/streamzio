@@ -9,7 +9,7 @@ import { FullUser } from '@/types';
 import UserAvatar from '@/components/molecules/users/user-avatar';
 import Actions from '../users/actions';
 import socketContext from '@/context/socket-context';
-import { cn } from '@streamzio/ui';
+import { Skeleton, cn } from '@streamzio/ui';
 
 type Props = {
     user: FullUser;
@@ -85,6 +85,31 @@ const Header = ({ user, stream, isHost, isFollowing }: Props) => {
                             <span>{viewerCount}</span>
                         </h4>
                     </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export const HeaderSkeleton = () => {
+    return (
+        <div className="w-full p-6">
+            <div className="flex gap-4">
+                <div className="flex items-start">
+                    <div className="rounded-full overflow-hidden">
+                        <Skeleton className="w-16 h-16 rounded-full" />
+                    </div>
+                </div>
+                <div className="flex-1 flex flex-col gap-2">
+                    <div className="flex gap-2 items-center">
+                        <Skeleton className="w-16 h-5" />
+                    </div>
+                    <div>
+                        <Skeleton className="w-32 h-5" />
+                    </div>
+                </div>
+                <div className="flex flex-col gap-2">
+                    <Skeleton className="h-10 w-32" />
                 </div>
             </div>
         </div>

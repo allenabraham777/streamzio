@@ -38,7 +38,7 @@ const CollapsibleButton = ({ children }: Props) => {
                     )}
                 </Button>
             </ToolTip>
-            <Button className="block lg:hidden" variant="ghost" disabled></Button>
+            <Button className={cn('block lg:!hidden')} variant="ghost" disabled></Button>
 
             <span
                 className={cn('transition-opacity text-center flex-1 duration-200 delay-200', {

@@ -2,7 +2,7 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
 
-import { cn } from '@streamzio/ui';
+import { Skeleton, cn } from '@streamzio/ui';
 import { Stream } from '@streamzio/db';
 
 import chatVariantStateSelector from '@/store/selectors/chatVariantStateSelector';
@@ -74,6 +74,27 @@ const Chat = ({
                     isFollowing={isFollowing}
                     onSubmit={onSubmit}
                 />
+            </div>
+        </div>
+    );
+};
+
+export const ChatSkeleton = () => {
+    return (
+        <div className="h-full w-full bg-card flex flex-col">
+            <div className="w-full p-3 flex items-center justify-between">
+                <Skeleton className="bg-transparent lg:!bg-muted w-6 h-6" />
+                <Skeleton className="h-6 w-32" />
+                <Skeleton className="w-6 h-6" />
+            </div>
+            <div className="flex-1 flex flex-col">
+                <div className="flex-1 flex items-center justify-center">
+                    <Skeleton className="h-5 w-32" />
+                </div>
+                <div className="p-6 space-y-4">
+                    <Skeleton className="h-8" />
+                    <Skeleton className="h-8" />
+                </div>
             </div>
         </div>
     );
