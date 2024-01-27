@@ -54,7 +54,7 @@ const Chat = ({
                     hidden: !isHidden || !isChat
                 })}
             >
-                <h1 className="text-xl">Chats Unavailable</h1>
+                <h1 className="text-sm">Chats unavailable</h1>
             </div>
             <div
                 className={cn('flex-1 flex flex-col', {

@@ -19,7 +19,14 @@ const Dashboard = async ({ params }: Props) => {
     }
     return (
         <div className="w-full h-full">
-            <StreamPlayer user={user} isHost={true} stream={user.stream} isFollowing isDashboard />
+            <StreamPlayer
+                user={user}
+                isHost={true}
+                stream={user.stream}
+                isFollowing
+                isDashboard
+                muted
+            />
         </div>
     );
 };

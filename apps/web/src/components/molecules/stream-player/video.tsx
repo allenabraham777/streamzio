@@ -9,6 +9,7 @@ import VideoPlayer from './video-player';
 type Props = {
     user: FullUser;
     stream: Stream;
+    muted?: boolean;
 };
 
 const Offline = ({ user }: Props) => {
@@ -20,12 +21,12 @@ const Offline = ({ user }: Props) => {
     );
 };
 
-const Video = ({ user, stream }: Props) => {
+const Video = ({ user, stream, muted }: Props) => {
     let component;
     if (!stream.isLive) {
         component = <Offline stream={stream} user={user} />;
     } else {
-        component = <VideoPlayer user={user} stream={stream} />;
+        component = <VideoPlayer muted={muted} user={user} stream={stream} />;
     }
     return <div className="aspect-video border-b">{component}</div>;
 };

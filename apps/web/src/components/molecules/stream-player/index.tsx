@@ -13,6 +13,7 @@ import chatCollapsibleState from '@/store/atoms/chatCollapsibleState';
 import Video from './video';
 import Chat from './chat';
 import ToolTip from '../tooltip';
+import Header from './header';
 
 type Props = {
     user: FullUser;
@@ -20,9 +21,10 @@ type Props = {
     stream: Stream;
     isFollowing: boolean;
     isDashboard?: boolean;
+    muted?: boolean;
 };
 
-const StreamPlayer = ({ user, isHost, stream, isFollowing, isDashboard }: Props) => {
+const StreamPlayer = ({ user, isHost, stream, isFollowing, isDashboard, muted = false }: Props) => {
     const { socket } = useContext(socketContext);
     const [collapsedState, setCollapsedState] = useRecoilState(chatCollapsibleState);
     const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -59,7 +61,8 @@ const StreamPlayer = ({ user, isHost, stream, isFollowing, isDashboard }: Props)
     return (
         <div className={cn('h-full w-full flex flex-col lg:!flex-row relative')}>
             <div className="lg:flex-1">
-                <Video user={user} stream={stream} />
+                <Video user={user} stream={stream} muted={muted} />
+                <Header isHost={isHost} isFollowing={isFollowing} stream={stream} user={user} />
             </div>
             <ToolTip message="Expand" side="left">
                 <Button

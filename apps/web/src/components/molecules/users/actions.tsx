@@ -14,9 +14,11 @@ import { onBlock } from '@/actions/block';
 type Props = {
     isFollowing: boolean;
     userId: string;
+    disabled?: boolean;
+    showBlock?: boolean;
 };
 
-const Actions = ({ isFollowing, userId }: Props) => {
+const Actions = ({ isFollowing, userId, disabled = false, showBlock }: Props) => {
     const [isPending, startTransition] = useTransition();
     const handleFollow = () => {
         startTransition(() => {
@@ -85,9 +87,10 @@ const Actions = ({ isFollowing, userId }: Props) => {
     return (
         <div className="flex gap-4">
             <Button
+                size="sm"
                 className={cn('flex gap-2', { 'cursor-progress': isPending })}
                 variant={isFollowing ? 'secondary' : 'default'}
-                disabled={isPending}
+                disabled={isPending || disabled}
                 onClick={followButtonHandler}
             >
                 {isFollowing ? (
@@ -100,14 +103,17 @@ const Actions = ({ isFollowing, userId }: Props) => {
                     </>
                 )}
             </Button>
-            <Button
-                className={cn('flex gap-2', { 'cursor-progress': isPending })}
-                variant="destructive"
-                disabled={isPending}
-                onClick={handleBlock}
-            >
-                Block <MdBlock />
-            </Button>
+            {showBlock && (
+                <Button
+                    size="sm"
+                    className={cn('flex gap-2', { 'cursor-progress': isPending })}
+                    variant="destructive"
+                    disabled={isPending || disabled}
+                    onClick={handleBlock}
+                >
+                    Block <MdBlock />
+                </Button>
+            )}
         </div>
     );
 };

@@ -89,22 +89,26 @@ const Community = ({ stream, user, isHost }: Props) => {
                     <FaSearch className="w-4 h-4 absolute left-3 top-3" />
                 </div>
             </div>
-            <div className="flex-1 overflow-y-auto px-4 py-6 space-y-2">
+            <div className="flex-1 flex flex-col px-4 py-6 gap-4">
                 <h1 className="text-base font-bold">Members</h1>
-                {filteredList.length === 0 && (
-                    <h1 className="text-sm py-24 text-center">No members</h1>
-                )}
-                {filteredList.map((member) => (
-                    <MemberCard
-                        key={member.userId}
-                        userId={member.userId}
-                        socketId={member.socketId}
-                        username={member.username}
-                        isActionAllowed={isHost && user.id !== member.userId}
-                        blockUser={blockUser}
-                        disabled={isPending}
-                    />
-                ))}
+                <div className="flex-1 overflow-y-auto space-y-2">
+                    {filteredList.length === 0 && (
+                        <div className="text-sm flex h-full w-full justify-center items-center">
+                            Members list unavailable
+                        </div>
+                    )}
+                    {filteredList.map((member) => (
+                        <MemberCard
+                            key={member.userId}
+                            userId={member.userId}
+                            socketId={member.socketId}
+                            username={member.username}
+                            isActionAllowed={isHost && user.id !== member.userId}
+                            blockUser={blockUser}
+                            disabled={isPending}
+                        />
+                    ))}
+                </div>
             </div>
         </div>
     );

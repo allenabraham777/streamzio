@@ -13,11 +13,12 @@ import FullscreenToggle from './fullscreen-toggle';
 type Props = {
     stream: Stream;
     user: FullUser;
+    muted?: boolean;
 };
 
-const VideoPlayer = ({ user, stream }: Props) => {
+const VideoPlayer = ({ user, stream, muted = false }: Props) => {
     const [fullscreen, setFullscreen] = useState(false);
-    const [mute, setMute] = useState(false);
+    const [mute, setMute] = useState(muted);
     const [volume, setVolume] = useState(100);
     const [play, setPlay] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
