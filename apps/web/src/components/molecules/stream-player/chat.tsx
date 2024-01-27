@@ -39,7 +39,8 @@ const Chat = ({
     const variant = useRecoilValue(chatVariantStateSelector);
     const isChat = variant === ChatVariants.CHAT;
     const buttonText = isChat ? 'STREAM CHAT' : 'COMMUNITY';
-    const isHidden = !isChatEnabled || !stream.isLive;
+    const isLive = stream.isLive;
+    const isHidden = !isChatEnabled || !isLive;
 
     const onSubmit = (message: string) => {
         sendMessage(message);
