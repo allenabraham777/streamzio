@@ -44,5 +44,6 @@ export const nodeMediaServer = (nms: NodeMediaServer, io: Server) => {
                 isLive: false
             }
         });
+        io.to(stream.id).emit('stream:stopped');
     });
 };
