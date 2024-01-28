@@ -15,6 +15,7 @@ import Chat, { ChatSkeleton } from './chat';
 import ToolTip from '../tooltip';
 import Header, { HeaderSkeleton } from './header';
 import StreamInfo from './stream-info';
+import UserInfo from './user-info';
 
 type Props = {
     user: FullUser;
@@ -61,10 +62,15 @@ const StreamPlayer = ({ user, isHost, stream, isFollowing, isDashboard, muted = 
     }, [socket, stream.id]);
     return (
         <div className={cn('max-h-full h-full w-full flex flex-col lg:!flex-row relative')}>
-            <div className="max-h-full lg:flex-1 overflow-y-visible lg:overflow-y-auto pb-6">
+            <div className="lg:flex-1 overflow-y-visible lg:overflow-y-auto pb-6">
                 <Video user={user} stream={stream} muted={muted} />
                 <Header isHost={isHost} isFollowing={isFollowing} stream={stream} user={user} />
-                <StreamInfo stream={stream} />
+                {isHost && (
+                    <div className="pb-6">
+                        <StreamInfo stream={stream} />
+                    </div>
+                )}
+                <UserInfo isHost={isHost} followersCount={user._count.followedBy} user={user} />
             </div>
             <ToolTip message="Expand" side="left">
                 <Button

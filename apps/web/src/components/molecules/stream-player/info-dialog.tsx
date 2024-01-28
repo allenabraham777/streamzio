@@ -119,7 +119,11 @@ const UpdateDialog = ({ initialName, initialThumbnailUrl }: Props) => {
                 </div>
                 <DialogFooter className="!justify-between mt-6 gap-4">
                     <DialogClose ref={ref} asChild>
-                        <Button variant="outline" className="border-foreground">
+                        <Button
+                            disabled={isPending}
+                            variant="outline"
+                            className="border-foreground"
+                        >
                             Close
                         </Button>
                     </DialogClose>

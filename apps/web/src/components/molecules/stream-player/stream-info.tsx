@@ -5,7 +5,7 @@ import { MdOutlineModeEdit } from 'react-icons/md';
 import { Separator } from '@streamzio/ui';
 import { Stream } from '@streamzio/db';
 import Image from 'next/image';
-import UpdateDialog from './update-dialog';
+import UpdateDialog from './info-dialog';
 
 type Props = {
     stream: Stream;
