@@ -35,25 +35,32 @@ const VideoPlayer = ({ user, stream, muted = false }: Props) => {
     useEffect(() => {
         const loadPlayer = async () => {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const flvjs: any = await import('flv.js');
-            if (flvjs.isSupported() && videoRef.current) {
-                const flvPlayer = flvjs.createPlayer({
-                    type: 'flv',
-                    url: `${process.env.NEXT_PUBLIC_VIEW_SERVER}/${stream.streamKey}.flv`
-                    // url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4'
-                });
-                flvPlayer.attachMediaElement(videoRef.current);
-                flvPlayer.load();
-                flvPlayer.play();
-                videoRef.current.onplay = () => {
-                    setPlay(true);
-                };
-                return () => {
-                    flvPlayer.destroy();
-                };
-            }
         };
         loadPlayer();
+        if (isClient) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            let flv: any;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            import('flv.js').then((flvjs: any) => {
+                if (flvjs.isSupported() && videoRef.current) {
+                    const flvPlayer = flvjs.createPlayer({
+                        type: 'flv',
+                        url: `${process.env.NEXT_PUBLIC_VIEW_SERVER}/${stream.streamKey}.flv`
+                        // url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4'
+                    });
+                    flvPlayer.attachMediaElement(videoRef.current);
+                    flvPlayer.load();
+                    flvPlayer.play();
+                    flv = flvPlayer;
+                    videoRef.current.onplay = () => {
+                        setPlay(true);
+                    };
+                }
+            });
+            return () => {
+                flv?.destroy();
+            };
+        }
     }, [stream, isClient, user.username]);
 
     const playPause = () => {
@@ -88,6 +95,7 @@ const VideoPlayer = ({ user, stream, muted = false }: Props) => {
                 ref={videoRef}
                 muted={mute}
                 onClick={playPause}
+                poster={stream.thumbnailUrl || ''}
             />
             <div className="absolute bg-gradient-to-b from-transparent to-background p-4 w-full bottom-0 z-10 flex items-center gap-2">
                 <PlayButton play={play} onToggle={playPause} />

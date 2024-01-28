@@ -16,11 +16,11 @@ const DashboardLayout = async ({ children, params }: Props) => {
     const user = await getSelfByUsername(params.username);
     if (!user) notFound();
     return (
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full max-h-full">
             <Navbar />
-            <section className="flex h-full">
+            <section className="flex-1 flex overflow-y-auto">
                 <Sidebar user={user} />
-                <div className="flex-1">{children}</div>
+                <div className="flex-1 max-h-full overflow-y-auto">{children}</div>
             </section>
         </div>
     );

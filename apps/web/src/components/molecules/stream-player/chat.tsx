@@ -47,7 +47,7 @@ const Chat = ({
     };
 
     return (
-        <div className="h-full w-full bg-card flex flex-col">
+        <div className="h-full w-full min-h-96 bg-card flex flex-col">
             <CollapsibleButton>{buttonText}</CollapsibleButton>
             <div
                 className={cn('flex-1 flex items-center justify-center', {

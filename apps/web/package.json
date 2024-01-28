@@ -13,6 +13,7 @@
     "@streamzio/db": "*",
     "@streamzio/ui": "*",
     "@types/color-hash": "^1.0.5",
+    "@uploadthing/react": "^6.2.2",
     "class-variance-authority": "^0.7.0",
     "color-hash": "^2.0.2",
     "flv.js": "^1.6.2",
@@ -29,7 +30,10 @@
     "svix": "^1.15.0",
     "tailwindcss-animate": "^1.0.7",
     "underscore": "^1.13.6",
-    "usehooks-ts": "^2.9.5"
+    "uploadthing": "^6.3.1",
+    "usehooks-ts": "^2.9.5",
+    "video.js": "^8.10.0",
+    "videojs-flvjs": "^0.3.1"
   },
   "devDependencies": {
     "@types/node": "^20",
