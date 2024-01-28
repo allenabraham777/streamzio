@@ -10,9 +10,9 @@ const Chat = async () => {
         throw new Error('Stream not found');
     }
     return (
-        <section className="px-10 py-6 flex flex-col gap-8">
-            <h1 className="text-3xl">Chat Settings</h1>
-            <div className="flex flex-col gap-6">
+        <section className="px-6 lg:!px-10 py-6 flex flex-col gap-4 lg:!gap-8">
+            <h1 className="text-xl lg:text-3xl">Chat Settings</h1>
+            <div className="flex flex-col gap-4 lg:!gap-6">
                 <ToggleCard
                     field="isChatEnabled"
                     label="Enable chat"

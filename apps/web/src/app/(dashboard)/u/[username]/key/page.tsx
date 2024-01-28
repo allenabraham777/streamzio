@@ -13,9 +13,9 @@ const KeyPage = async () => {
         throw new Error('No streams available');
     }
     return (
-        <section className="px-10 py-6 flex flex-col gap-8">
-            <div className="flex gap-8 items-center">
-                <h1 className="text-3xl">Stream Keys and Urls</h1>
+        <section className="px-6 lg:!px-10 py-6 flex flex-col gap-8">
+            <div className="flex flex-col lg:!flex-row gap-8 lg:items-center">
+                <h1 className="text-xl lg:text-3xl">Stream Keys and Urls</h1>
                 <Generate />
             </div>
             <div className="flex flex-col gap-6">

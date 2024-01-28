@@ -39,8 +39,8 @@ const ToggleCard = (props: Props) => {
         });
     }, [props]);
     return (
-        <div className="py-6 px-10 rounded-xl bg-card flex justify-between">
-            <h3 className="text-xl">{props.label}</h3>
+        <div className="py-4 lg:!py-6 px-4 lg:!px-10 rounded-xl bg-card flex justify-between">
+            <h3 className="text-base lg:text-xl">{props.label}</h3>
             <Switch disabled={isPending} checked={props.value} onCheckedChange={onCheckedChange} />
         </div>
     );
