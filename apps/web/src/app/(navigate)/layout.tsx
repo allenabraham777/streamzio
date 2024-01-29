@@ -14,7 +14,7 @@ const HomeLayout = ({ children }: Props) => {
                 <Suspense fallback={<SidebarSkeleton />}>
                     <Sidebar />
                 </Suspense>
-                <div className="flex-1">{children}</div>
+                <div className="flex-1 overflow-y-auto">{children}</div>
             </section>
         </div>
     );

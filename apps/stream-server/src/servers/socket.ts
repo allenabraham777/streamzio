@@ -25,8 +25,6 @@ export const socketServer = (io: Server) => {
     const userListTrigger = (streamId: string) => {
         const _clients = io.sockets.adapter.rooms.get(streamId);
         if (_clients) {
-            console.log(_clients, io.sockets.adapter.rooms, streamId);
-
             const clients = Array.from(_clients).map((client) => {
                 const userSocket = io.sockets.sockets.get(client);
                 const { username, id: userId } = userSocket!.user!;
