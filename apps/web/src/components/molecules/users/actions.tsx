@@ -10,6 +10,7 @@ import { User } from '@streamzio/db';
 
 import { onFollow, onUnfollow } from '@/actions/follow';
 import { onBlock } from '@/actions/block';
+import ToolTip from '../tooltip';
 
 type Props = {
     isFollowing: boolean;
@@ -86,23 +87,25 @@ const Actions = ({ isFollowing, userId, disabled = false, showBlock }: Props) =>
     };
     return (
         <div className="flex gap-4">
-            <Button
-                size="sm"
-                className={cn('flex gap-2', { 'cursor-progress': isPending })}
-                variant={isFollowing ? 'secondary' : 'default'}
-                disabled={isPending || disabled}
-                onClick={followButtonHandler}
-            >
-                {isFollowing ? (
-                    <>
-                        <FaHeartBroken className="w-4 h-4" />
-                    </>
-                ) : (
-                    <>
-                        Follow <FaRegHeart className="w-4 h-4" />
-                    </>
-                )}
-            </Button>
+            <ToolTip message={isFollowing ? 'Unfollow' : 'Follow'} side="bottom">
+                <Button
+                    size="sm"
+                    className={cn('flex gap-2', { 'cursor-progress': isPending })}
+                    variant={isFollowing ? 'secondary' : 'default'}
+                    disabled={isPending || disabled}
+                    onClick={followButtonHandler}
+                >
+                    {isFollowing ? (
+                        <>
+                            <FaHeartBroken className="w-4 h-4" />
+                        </>
+                    ) : (
+                        <>
+                            Follow <FaRegHeart className="w-4 h-4" />
+                        </>
+                    )}
+                </Button>
+            </ToolTip>
             {showBlock && (
                 <Button
                     size="sm"

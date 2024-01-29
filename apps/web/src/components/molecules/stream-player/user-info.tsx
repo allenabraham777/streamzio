@@ -12,7 +12,6 @@ type Props = {
 };
 
 function UserInfo({ user, followersCount, isHost }: Props) {
-    const _followerCount = followersCount > 1000 ? followersCount : followersCount * 1000;
     return (
         <div className="px-6">
             <div className="bg-card py-6 rounded-xl flex flex-col gap-4">
@@ -33,10 +32,10 @@ function UserInfo({ user, followersCount, isHost }: Props) {
                             {Intl.NumberFormat('en-US', {
                                 notation: 'compact',
                                 maximumFractionDigits: 1
-                            }).format(_followerCount)}
+                            }).format(followersCount)}
                         </span>
                         <span className="text-base text-foreground/40">
-                            {_followerCount === 1 ? 'follower' : 'followers'}
+                            {followersCount === 1 ? 'follower' : 'followers'}
                         </span>
                     </div>
                     <div className="px-6 text-sm">{user.bio || 'No bio.'}</div>
