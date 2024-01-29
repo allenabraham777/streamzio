@@ -45,6 +45,7 @@ const StreamPlayer = ({ user, isHost, stream, isFollowing, isDashboard, muted = 
         if (socket) {
             socket.emit('stream:join', stream.id);
             socket.on('stream:started', revalidateRoutes);
+            socket.on('stream:user:blocked', revalidateRoutes);
             socket.on('stream:stopped', () => {
                 setTimeout(() => {
                     revalidateRoutes();
@@ -54,6 +55,7 @@ const StreamPlayer = ({ user, isHost, stream, isFollowing, isDashboard, muted = 
             socket.on('stream:chat:receive', receiveMessage);
             return () => {
                 socket.emit('stream:leave', stream.id);
+                socket.off('stream:user:blocked', revalidateRoutes);
                 socket.off('stream:started', revalidateRoutes);
                 socket.off('stream:stopped', revalidateRoutes);
                 socket.off('stream:chat:receive', receiveMessage);

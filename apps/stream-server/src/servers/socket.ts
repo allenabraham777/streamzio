@@ -22,39 +22,45 @@ export const socketServer = (io: Server) => {
         next();
     });
 
+    const userListTrigger = (streamId: string) => {
+        const _clients = io.sockets.adapter.rooms.get(streamId);
+        if (_clients) {
+            console.log(_clients, io.sockets.adapter.rooms, streamId);
+
+            const clients = Array.from(_clients).map((client) => {
+                const userSocket = io.sockets.sockets.get(client);
+                const { username, id: userId } = userSocket!.user!;
+                return { username, userId, socketId: client };
+            });
+            clients;
+            io.to(streamId).emit('stream:user:list', clients);
+        }
+    };
+
     io.on('connection', (socket: Socket) => {
         socket.on('stream:join', (streamId: string) => {
             console.log(socket.id, 'joined the stream', streamId);
 
             socket.join(streamId);
-            const { username, id: userId } = socket.user!;
-            io.to(streamId).emit('stream:user:joined', { userId, username, socketId: socket.id });
+            userListTrigger(streamId);
         });
 
         socket.on('stream:leave', (streamId: string) => {
             console.log(socket.id, 'leaving the stream', streamId);
 
             socket.leave(streamId);
-            const { id } = socket.user!;
-            io.to(streamId).emit('stream:user:left', id);
+            userListTrigger(streamId);
         });
 
         socket.on('stream:user:all', (streamId: string) => {
-            const _clients = io.sockets.adapter.rooms.get(streamId);
-            if (_clients) {
-                const clients = Array.from(_clients).map((client) => {
-                    const userSocket = io.sockets.sockets.get(client);
-                    const { username, id: userId } = userSocket!.user!;
-                    return { username, userId, socketId: client };
-                });
-                socket.emit('stream:user:list', clients);
-            }
+            userListTrigger(streamId);
         });
 
         socket.on('stream:user:block', (streamId: string, socketId: string) => {
             const userSocket = io.sockets.sockets.get(socketId);
             userSocket!.leave(streamId);
-            io.to(streamId).emit('stream:user:left', userSocket!.user!.id);
+            io.to(socketId).emit('stream:user:blocked');
+            userListTrigger(streamId);
         });
 
         socket.on('stream:chat:send', (streamId, message) => {

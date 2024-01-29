@@ -28,28 +28,20 @@ const Header = ({ user, stream, isHost, isFollowing }: Props) => {
             setMembers(members);
         };
 
-        const addMember = (member: Member) => {
-            setMembers([...members, member]);
-        };
-
-        const removeMember = (id: string) => {
-            setMembers(members.filter((member) => member.userId !== id));
-        };
         if (socket && stream.isLive) {
             socket.emit('stream:user:all', stream.id);
             socket.on('stream:user:list', loadList);
-            socket.on('stream:user:joined', addMember);
-            socket.on('stream:user:left', removeMember);
 
             return () => {
                 socket?.off('stream:user:list', loadList);
-                socket?.off('stream:user:joined', addMember);
-                socket?.off('stream:user:left', removeMember);
                 setMembers([]);
             };
         }
     }, [stream.isLive, socket]);
-    const viewerCount = members.length ? members.length - 1 : 0;
+    let viewerCount = members.length;
+    if (isHost) {
+        viewerCount -= 1;
+    }
     return (
         <div className="w-full p-6">
             <div className="flex gap-4">

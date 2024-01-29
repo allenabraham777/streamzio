@@ -31,23 +31,12 @@ const Community = ({ stream, user, isHost }: Props) => {
             setMembers(members);
         };
 
-        const addMember = (member: Member) => {
-            setMembers([...members, member]);
-        };
-
-        const removeMember = (id: string) => {
-            setMembers(members.filter((member) => member.userId !== id));
-        };
         if (socket && stream.isLive) {
             socket.emit('stream:user:all', stream.id);
             socket.on('stream:user:list', loadList);
-            socket.on('stream:user:joined', addMember);
-            socket.on('stream:user:left', removeMember);
 
             return () => {
                 socket?.off('stream:user:list', loadList);
-                socket?.off('stream:user:joined', addMember);
-                socket?.off('stream:user:left', removeMember);
                 setMembers([]);
             };
         }
