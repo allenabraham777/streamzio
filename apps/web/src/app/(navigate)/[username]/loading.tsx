@@ -2,7 +2,7 @@ import React from 'react';
 
 import { StreamPlayerSkeleton } from '@/components/molecules/stream-player';
 
-const DashboardLoading = async () => {
+const UserpageLoading = () => {
     return (
         <div className="w-full h-full">
             <StreamPlayerSkeleton />
@@ -10,4 +10,4 @@ const DashboardLoading = async () => {
     );
 };
 
-export default DashboardLoading;
+export default UserpageLoading;

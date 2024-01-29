@@ -14,7 +14,9 @@ const Navbar = async () => {
     return (
         <nav className="w-full px-2 py-1 bg-card border-b-2 dark:border-b-background flex justify-between items-center gap-6">
             <span>
-                <Image src="/logo.png" width={40} height={40} alt="Streamzio" />
+                <Link href="/">
+                    <Image src="/logo.png" width={40} height={40} alt="Streamzio" />
+                </Link>
             </span>
             <div className="flex-1 flex justify-center items-center">
                 <Search />
