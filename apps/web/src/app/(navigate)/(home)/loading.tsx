@@ -1,6 +1,5 @@
 import React from 'react';
-
-import StreamsSkeleton from './_component/streams/streams-skeleton';
+import { StreamsSkeleton } from './_component/streams';
 
 const Loading = () => {
     return (
