@@ -1,6 +1,7 @@
 'use server';
 import { revalidatePath } from 'next/cache';
 import { blockUser, unblockUser } from '@/services/block';
+import { getSelf } from '@/services/self';
 
 export const onBlock = async (userId: string) => {
     const blockedUser = await blockUser(userId);
@@ -12,10 +13,11 @@ export const onBlock = async (userId: string) => {
 };
 
 export const onUnblock = async (userId: string) => {
+    const self = await getSelf();
     const unblockedUser = await unblockUser(userId);
     revalidatePath('/');
     if (unblockedUser) {
-        revalidatePath(`/${unblockedUser.blocked.username}`);
+        revalidatePath(`/u/${self.username}/community`);
     }
     return unblockedUser;
 };
