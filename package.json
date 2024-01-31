@@ -32,7 +32,8 @@
     "dev": "turbo run dev",
     "lint": "turbo lint",
     "prettier": "turbo prettier",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "postinstall": "yarn workspace @streamzio/db run generate"
   },
   "config": {
     "commitizen": {
