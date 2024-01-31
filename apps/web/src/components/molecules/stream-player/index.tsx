@@ -72,7 +72,7 @@ const StreamPlayer = ({ user, isHost, stream, isFollowing, isDashboard, muted = 
                         <StreamInfo stream={stream} />
                     </div>
                 )}
-                <UserInfo isHost={isHost} followersCount={user._count.followedBy} user={user} />
+                <UserInfo isHost={isHost} followersCount={user._count!.followedBy} user={user} />
             </div>
             <ToolTip message="Expand" side="left">
                 <Button
