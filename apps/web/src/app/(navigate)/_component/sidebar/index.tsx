@@ -1,17 +1,26 @@
-import React from 'react';
+'use client';
+import React, { useEffect, useState, useTransition } from 'react';
 
 import CollapsibleButton, {
     CollapsibleButtonSkeleton
 } from '@/app/(navigate)/_component/sidebar/collapsible-button';
 import RecomendedChannels, { RecomendedChannelsSekeleton } from './recomended-channels';
 import SidebarWrapper from './sidebar-wrapper';
-import { getRecommended } from '@/services/recomended';
-import { getFollowedUsers } from '@/services/follow';
 import FollowingChannels from './followed-channels';
+import { getFollowedAction, getRecommendedAction } from '@/actions/user';
+import { FullUser } from '@/types';
 
-const Sidebar = async () => {
-    const channels = await getRecommended();
-    const following = await getFollowedUsers();
+const Sidebar = () => {
+    const [isPending, startTransition] = useTransition();
+    const [following, setFollowing] = useState<{ following: FullUser }[]>([]);
+    const [channels, setChannels] = useState<FullUser[]>([]);
+    useEffect(() => {
+        startTransition(() => {
+            getRecommendedAction().then((recommended) => setChannels(recommended));
+            getFollowedAction().then((followed) => setFollowing(followed));
+        });
+    }, []);
+    if (isPending) return <SidebarSkeleton />;
     return (
         <SidebarWrapper>
             <CollapsibleButton>For You</CollapsibleButton>

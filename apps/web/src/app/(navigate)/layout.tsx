@@ -1,7 +1,6 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import Navbar from './_component/navbar';
 import Sidebar from './_component/sidebar';
-import { SidebarSkeleton } from './_component/sidebar/skeleton';
 
 type Props = {
     children: React.ReactNode;
@@ -12,9 +11,7 @@ const HomeLayout = ({ children }: Props) => {
         <div className="flex flex-col h-full">
             <Navbar />
             <section className="flex h-full">
-                <Suspense fallback={<SidebarSkeleton />}>
-                    <Sidebar />
-                </Suspense>
+                <Sidebar />
                 <div className="flex-1 overflow-y-auto">{children}</div>
             </section>
         </div>
