@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import Navbar from './_component/navbar';
-import Sidebar, { SidebarSkeleton } from './_component/sidebar';
+import Sidebar from './_component/sidebar';
+import { SidebarSkeleton } from './_component/sidebar/skeleton';
 
 type Props = {
     children: React.ReactNode;
