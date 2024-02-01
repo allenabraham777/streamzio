@@ -1,7 +1,7 @@
 import { SignIn } from '@clerk/nextjs';
 
 const Signin = () => {
-    return <SignIn />;
+    return <SignIn afterSignInUrl="/" afterSignUpUrl="/" redirectUrl="/" />;
 };
 
 export default Signin;
